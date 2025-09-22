@@ -11,3 +11,11 @@ repos:
       - id: trailing-whitespace
       - id: check-ast
       - id: check-yaml
+  - repo: local
+    hooks:
+      - id: pytest-changed
+        name: Run pytest on changed tests
+        entry: bash -c 'changed=$(git diff --cached --name-only | grep -E "^tests/.*\\.py$" || true); if [ -n "$changed" ]; then python -m pytest -q $changed; else echo "No changed tests"; fi'
+        language: system
+        pass_filenames: false
+        types: [python]
