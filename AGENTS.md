@@ -40,4 +40,3 @@ If `make` isn’t available, provide equivalent package or language commands in 
 - Do not commit secrets; use `.env.example` for required variables.
 - Review dependencies regularly; prefer pinned versions.
 - Follow least-privilege for tokens/keys used in local testing.
-

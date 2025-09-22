@@ -18,4 +18,3 @@ Example: `APP_NAME=Alice make dev` → `Hello, Alice!`
 1. Install: `pip install pre-commit`
 2. Initialize: `pre-commit install`
 3. Run on all files: `make precommit`
-
