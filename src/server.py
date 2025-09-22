@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 import time
 
 from fastapi import FastAPI, Query, Request
@@ -17,14 +18,24 @@ async def access_log(request: Request, call_next):
     start = time.time()
     response = await call_next(request)
     duration_ms = int((time.time() - start) * 1000)
-    log = {
-        "level": "info",
-        "method": request.method,
-        "path": request.url.path,
-        "status": response.status_code,
-        "duration_ms": duration_ms,
-    }
-    logger.info(json.dumps(log, ensure_ascii=False))
+    fmt = os.getenv("APP_LOG_FORMAT", "json").lower()
+    if fmt == "plain":
+        logger.info(
+            "%s %s -> %s (%dms)",
+            request.method,
+            request.url.path,
+            response.status_code,
+            duration_ms,
+        )
+    else:
+        log = {
+            "level": "info",
+            "method": request.method,
+            "path": request.url.path,
+            "status": response.status_code,
+            "duration_ms": duration_ms,
+        }
+        logger.info(json.dumps(log, ensure_ascii=False))
     return response
 
 

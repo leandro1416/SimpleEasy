@@ -22,6 +22,7 @@ Example: `APP_NAME=Alice make dev` → `Hello, Alice!`
 - `APP_NAME`: name to greet (default: `world`).
 - `APP_LANG`: language code, `en` or `pt` (default: `en`).
 - `APP_TIME_GREET`: enable time-based greeting when `true`/`1`/`yes`/`on`.
+- `APP_LOG_FORMAT`: `json` (default) or `plain` for server request logs.
 
 Examples
 - Localized: `APP_NAME=Ana APP_LANG=pt make dev` → `Olá, Ana!`
@@ -46,6 +47,13 @@ Examples
 - Health checks:
   - `GET http://127.0.0.1:8000/health` → `{ "status": "ok" }`
   - `GET http://127.0.0.1:8000/ready` → `{ "status": "ready" }`
+
+## Troubleshooting
+- Port already in use: override port with `PORT=8001 make serve` or `PORT=8001 make docker-run`.
+- Pre-commit blocks commit: run `make precommit` (auto-fixes) then re-commit.
+- Tests can’t import `src`: ensure `PYTHONPATH=src` when running tests or use `make test`.
+- GHCR auth: if pulls fail, login with a Personal Access Token (classic, `read:packages`):
+  - `echo $CR_PAT | docker login ghcr.io -u <user> --password-stdin`.
 
 ## Contributing
 - Use PRs for changes; require passing CI.

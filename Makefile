@@ -20,11 +20,11 @@ dev run:
 
 serve:
 	$(PIP) install -r requirements-server.txt
-	uvicorn src.server:app --reload --port 8000
+	uvicorn src.server:app --reload --port $${PORT:-8000}
 
 docker-run:
 	docker build -t simpleeasy:dev .
-	docker run --rm -p 8000:8000 simpleeasy:dev
+	docker run --rm -p $${PORT:-8000}:8000 simpleeasy:dev
 
 clean:
 	rm -rf .pytest_cache __pycache__ */__pycache__
@@ -51,6 +51,7 @@ help:
 	@echo "  make format           Format code with Ruff"
 	@echo "  make dev              Run the example app"
 	@echo "  make serve            Run FastAPI server on :8000"
+	@echo "                       (override with PORT=8001)"
 	@echo "  make coverage-html    Generate HTML coverage report"
 	@echo "  make precommit        Run pre-commit on all files"
 	@echo "  make precommit-autoupdate  Update pre-commit hook versions"
