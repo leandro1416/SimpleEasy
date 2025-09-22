@@ -40,6 +40,13 @@ Examples
   - `GET /hello?name=Ana&lang=pt&time=true` → time-based greeting in Portuguese
   - API docs: Swagger UI at `http://127.0.0.1:8000/docs` and ReDoc at `/redoc`
 
+### Run via GHCR Image
+- Pull: `docker pull ghcr.io/leandro1416/SimpleEasy:latest`
+- Run: `docker run --rm -p 8000:8000 ghcr.io/leandro1416/SimpleEasy:latest`
+- Health checks:
+  - `GET http://127.0.0.1:8000/health` → `{ "status": "ok" }`
+  - `GET http://127.0.0.1:8000/ready` → `{ "status": "ready" }`
+
 ## Contributing
 - Use PRs for changes; require passing CI.
 - Suggested branch protection for `main`:
