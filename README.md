@@ -68,6 +68,8 @@ Examples
 - Start services: `make docker-up` (UI on http://localhost:8080, API on http://localhost:8000)
 - Stop services: `make docker-down`
 - CORS for UI: `APP_CORS_ORIGINS=http://localhost:8080 make docker-up`
+ - UI proxy: requests to `/api/` are proxied to the API (http://api:8000) inside Compose.
+   - Example: `http://localhost:8080/api/hello?name=Alice&lang=en`
 
 ## Troubleshooting
 - Port already in use: override port with `PORT=8001 make serve` or `PORT=8001 make docker-run`.
