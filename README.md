@@ -65,6 +65,13 @@ Examples
 - GHCR auth: if pulls fail, login with a Personal Access Token (classic, `read:packages`):
   - `echo $CR_PAT | docker login ghcr.io -u <user> --password-stdin`.
 
+## Architecture
+- Core: `src/app.py` implements pure greeting logic (localized and time-based) and a small CLI via `main()`.
+- API: `src/server.py` exposes HTTP endpoints using FastAPI with access logging and health checks.
+- Tests: `tests/` covers core logic and API behavior (async httpx + uvicorn for server tests).
+- Tooling: Makefile targets for dev/test/lint/typecheck/serve/docker; pre-commit ensures formatting/lint.
+- CI/CD: GitHub Actions runs tests, lint, typecheck, security audit; releases auto-generate notes and publish a Docker image to GHCR.
+
 ## Contributing
 - Use PRs for changes; require passing CI.
 - Suggested branch protection for `main`:
