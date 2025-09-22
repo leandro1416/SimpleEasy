@@ -25,6 +25,7 @@ export default function App() {
   const [name, setName] = useState(localStorage.getItem('name') || '')
   const [lang, setLang] = useState<'en' | 'pt'>((localStorage.getItem('lang') as 'en' | 'pt') || 'en')
   const [time, setTime] = useState(localStorage.getItem('time') === 'true')
+  const [theme, setTheme] = useState<'light' | 'dark'>((localStorage.getItem('theme') as 'light' | 'dark') || 'light')
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
   const t = useMemo(() => i18n[lang], [lang])
@@ -33,7 +34,14 @@ export default function App() {
     localStorage.setItem('name', name)
     localStorage.setItem('lang', lang)
     localStorage.setItem('time', String(time))
-  }, [name, lang, time])
+    localStorage.setItem('theme', theme)
+  }, [name, lang, time, theme])
+
+  useEffect(() => {
+    const root = document.documentElement
+    if (theme === 'dark') root.classList.add('dark')
+    else root.classList.remove('dark')
+  }, [theme])
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -60,22 +68,30 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900">
-      <header className="mx-auto max-w-2xl px-4 py-6">
+    <div className="min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+      <header className="mx-auto max-w-2xl px-4 py-6 flex items-center justify-between">
         <h1 className="text-2xl font-semibold">{t.title}</h1>
+        <button
+          type="button"
+          onClick={() => setTheme((prev) => (prev === 'light' ? 'dark' : 'light'))}
+          className="rounded border border-gray-300 dark:border-gray-700 px-3 py-1 text-sm bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700"
+          aria-label="Toggle theme"
+        >
+          {theme === 'light' ? 'Dark' : 'Light'} mode
+        </button>
       </header>
       <main className="mx-auto max-w-2xl px-4">
-        <form onSubmit={onSubmit} className="space-y-4 bg-white p-4 rounded-lg shadow">
+        <form onSubmit={onSubmit} className="space-y-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
           <div>
             <label className="block text-sm font-medium mb-1" htmlFor="name">{t.name}</label>
             <input id="name" value={name} onChange={(e) => setName(e.target.value)}
-              className="w-full rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Alice" />
+              className="w-full rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Alice" />
           </div>
           <div className="flex items-center gap-4">
             <div className="flex-1">
               <label className="block text-sm font-medium mb-1" htmlFor="lang">{t.language}</label>
               <select id="lang" value={lang} onChange={(e) => setLang(e.target.value as 'en' | 'pt')}
-                className="w-full rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                className="w-full rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                 <option value="en">English</option>
                 <option value="pt">Português</option>
               </select>
@@ -93,12 +109,12 @@ export default function App() {
 
         <section className="mt-6">
           <h2 className="text-sm font-medium mb-2">{t.result}</h2>
-          <div className="min-h-[3rem] rounded border border-dashed border-gray-300 p-3 bg-white">
+          <div className="min-h-[3rem] rounded border border-dashed border-gray-300 dark:border-gray-700 p-3 bg-white dark:bg-gray-800">
             {message || <span className="text-gray-400">—</span>}
           </div>
         </section>
 
-        <footer className="mt-8 text-sm text-gray-500">
+        <footer className="mt-8 text-sm text-gray-500 dark:text-gray-400">
           <a className="underline" href="http://127.0.0.1:8000/docs" target="_blank" rel="noreferrer">API docs</a>
         </footer>
       </main>
