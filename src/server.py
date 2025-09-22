@@ -13,10 +13,14 @@ logger = logging.getLogger("simpleeasy")
 
 app = FastAPI(title="SimpleEasy API")
 
-# CORS for local UI dev
+# CORS: allow local dev and any origins from APP_CORS_ORIGINS (comma-separated)
+default_origins = ["http://localhost:5173", "http://127.0.0.1:5173"]
+extra_origins = [o.strip() for o in os.getenv("APP_CORS_ORIGINS", "").split(",") if o.strip()]
+allow_origins = default_origins + extra_origins
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=allow_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

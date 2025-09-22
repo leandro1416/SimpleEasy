@@ -51,6 +51,11 @@ Examples
 - `GET /health` → `{ "status": "ok" }`
 - `GET /ready` → `{ "status": "ready" }`
 
+### CORS Configuration
+- Default allowed origins: `http://localhost:5173`, `http://127.0.0.1:5173`.
+- To allow additional origins in production, set env `APP_CORS_ORIGINS` as a comma-separated list:
+  - Example: `APP_CORS_ORIGINS=https://your-ui.example.com,https://staging-ui.example.com`
+
 ### Run via GHCR Image
 - Pull: `docker pull ghcr.io/leandro1416/SimpleEasy:latest`
 - Run: `docker run --rm -p 8000:8000 ghcr.io/leandro1416/SimpleEasy:latest`
