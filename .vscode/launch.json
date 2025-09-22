@@ -1,0 +1,32 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "API: Uvicorn",
+      "type": "python",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": ["src.server:app", "--host", "127.0.0.1", "--port", "8000", "--reload"],
+      "env": {
+        "APP_NAME": "DevUser",
+        "APP_LANG": "en",
+        "APP_TIME_GREET": "false",
+        "APP_LOG_FORMAT": "plain",
+        "PYTHONPATH": "src"
+      },
+      "jinja": true,
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Tests: Pytest",
+      "type": "python",
+      "request": "launch",
+      "module": "pytest",
+      "args": ["-q"],
+      "env": {
+        "PYTHONPATH": "src"
+      },
+      "console": "integratedTerminal"
+    }
+  ]
+}

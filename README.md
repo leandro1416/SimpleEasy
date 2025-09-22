@@ -41,6 +41,16 @@ Examples
   - `GET /hello?name=Ana&lang=pt&time=true` → time-based greeting in Portuguese
   - API docs: Swagger UI at `http://127.0.0.1:8000/docs` and ReDoc at `/redoc`
 
+### API Reference
+- `GET /hello`
+  - Query params:
+    - `name` (string, default `world`)
+    - `lang` (string, `en` or `pt`, default `en`)
+    - `time` (boolean, default `false`) — when true, returns time-based greeting
+  - Responses: `{ "message": "..." }`
+- `GET /health` → `{ "status": "ok" }`
+- `GET /ready` → `{ "status": "ready" }`
+
 ### Run via GHCR Image
 - Pull: `docker pull ghcr.io/leandro1416/SimpleEasy:latest`
 - Run: `docker run --rm -p 8000:8000 ghcr.io/leandro1416/SimpleEasy:latest`
