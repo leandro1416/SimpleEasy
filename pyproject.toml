@@ -3,6 +3,17 @@ addopts = "-q --cov=src --cov-report=term-missing --cov-fail-under=90"
 testpaths = ["tests"]
 pythonpath = ["src"]
 
+[project]
+name = "simpleeasy"
+version = "0.1.0"
+description = "Simple greeting demo with CLI and API"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = []
+
+[project.scripts]
+simpleeasy = "src.app:main"
+
 [tool.ruff]
 line-length = 100
 target-version = "py39"

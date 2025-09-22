@@ -44,3 +44,17 @@ async def test_hello_time_pt():
             assert "Ana" in r.json()["message"]
     finally:
         await _stop_server(server, task)
+
+
+@pytest.mark.asyncio
+async def test_health_ready():
+    server, task = await _run_server()
+    try:
+        async with httpx.AsyncClient() as client:
+            rh = await client.get("http://127.0.0.1:8001/health")
+            rr = await client.get("http://127.0.0.1:8001/ready")
+            assert rh.status_code == 200 and rr.status_code == 200
+            assert rh.json()["status"] == "ok"
+            assert rr.json()["status"] == "ready"
+    finally:
+        await _stop_server(server, task)
