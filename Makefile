@@ -1,7 +1,7 @@
 PY := python3
 PIP := pip3
 
-.PHONY: setup test lint dev run clean precommit precommit-autoupdate coverage-html help tidy
+.PHONY: setup test lint typecheck dev run clean precommit precommit-autoupdate coverage-html help tidy
 
 setup:
 	$(PIP) install -r requirements.txt
@@ -10,7 +10,7 @@ test:
 	$(PY) -m pytest -q
 
 lint:
-	$(PY) -m pyflakes src || echo "pyflakes not installed; skipping"
+	ruff check src tests
 
 dev run:
 	$(PY) -m src.app
@@ -42,3 +42,5 @@ help:
 	@echo "  make precommit        Run pre-commit on all files"
 	@echo "  make precommit-autoupdate  Update pre-commit hook versions"
 	@echo "  make clean|tidy       Remove caches"
+typecheck:
+	mypy src
