@@ -24,6 +24,10 @@ If `make` isn’t available, provide equivalent package or language commands in 
 - Types/Classes: `PascalCase`; variables/functions: `camelCase` (JS/TS) or `snake_case` (Python).
 - Use formatters/linters: Prettier + ESLint for JS/TS; Black + Ruff for Python.
 
+### Localization Notes
+- Supported languages: `en`, `pt`. Fallback to `en` for unknown codes.
+- Time-based greeting can be toggled with `APP_TIME_GREET`.
+
 ## Testing Guidelines
 - Mirror `src/` structure in `tests/`.
 - Name tests `test_*.py` (PyTest) or `*.spec.ts` / `*.test.ts` (Jest/Vitest).

@@ -14,6 +14,15 @@ Example: `APP_NAME=Alice make dev` → `Hello, Alice!`
 - Python 3.10 or newer
 - Pip and Make
 
+## Environment
+- `APP_NAME`: name to greet (default: `world`).
+- `APP_LANG`: language code, `en` or `pt` (default: `en`).
+- `APP_TIME_GREET`: enable time-based greeting when `true`/`1`/`yes`/`on`.
+
+Examples
+- Localized: `APP_NAME=Ana APP_LANG=pt make dev` → `Olá, Ana!`
+- Time-based: `APP_NAME=Ana APP_LANG=pt APP_TIME_GREET=true make dev`
+
 ## Pre-commit (optional)
 1. Install: `pip install pre-commit`
 2. Initialize: `pre-commit install`
