@@ -1,7 +1,7 @@
 PY := python3
 PIP := pip3
 
-.PHONY: setup test lint format typecheck dev run serve test-server clean precommit precommit-autoupdate coverage-html help tidy
+.PHONY: setup test lint format typecheck dev run serve test-server docker-run clean precommit precommit-autoupdate coverage-html help tidy
 
 setup:
 	$(PIP) install -r requirements.txt
@@ -21,6 +21,10 @@ dev run:
 serve:
 	$(PIP) install -r requirements-server.txt
 	uvicorn src.server:app --reload --port 8000
+
+docker-run:
+	docker build -t simpleeasy:dev .
+	docker run --rm -p 8000:8000 simpleeasy:dev
 
 clean:
 	rm -rf .pytest_cache __pycache__ */__pycache__

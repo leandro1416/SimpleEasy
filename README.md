@@ -34,6 +34,7 @@ Examples
 - Examples:
   - `GET /hello?name=Alice&lang=en` → `{ "message": "Hello, Alice!" }`
   - `GET /hello?name=Ana&lang=pt&time=true` → time-based greeting in Portuguese
+  - API docs: Swagger UI at `http://127.0.0.1:8000/docs` and ReDoc at `/redoc`
 
 ## Contributing
 - Use PRs for changes; require passing CI.
