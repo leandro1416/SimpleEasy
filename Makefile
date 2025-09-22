@@ -1,13 +1,13 @@
 PY := python3
 PIP := pip3
 
-.PHONY: setup test lint format typecheck dev run clean precommit precommit-autoupdate coverage-html help tidy
+.PHONY: setup test lint format typecheck dev run serve test-server clean precommit precommit-autoupdate coverage-html help tidy
 
 setup:
 	$(PIP) install -r requirements.txt
 
 test:
-	$(PY) -m pytest -q
+	PYTHONPATH=src $(PY) -m pytest -q
 
 lint:
 	ruff check src tests
@@ -17,6 +17,10 @@ format:
 
 dev run:
 	$(PY) -m src.app
+
+serve:
+	$(PIP) install -r requirements-server.txt
+	uvicorn src.server:app --reload --port 8000
 
 clean:
 	rm -rf .pytest_cache __pycache__ */__pycache__
@@ -28,7 +32,7 @@ precommit-autoupdate:
 	pre-commit autoupdate || echo "pre-commit not installed; install with: pip install pre-commit"
 
 coverage-html:
-	$(PY) -m pytest --cov=src --cov-report=html
+	PYTHONPATH=src $(PY) -m pytest --cov=src --cov-report=html
 	@echo "Open htmlcov/index.html in your browser"
 
 tidy:
@@ -42,6 +46,7 @@ help:
 	@echo "  make lint             Run Ruff checks"
 	@echo "  make format           Format code with Ruff"
 	@echo "  make dev              Run the example app"
+	@echo "  make serve            Run FastAPI server on :8000"
 	@echo "  make coverage-html    Generate HTML coverage report"
 	@echo "  make precommit        Run pre-commit on all files"
 	@echo "  make precommit-autoupdate  Update pre-commit hook versions"

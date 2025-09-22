@@ -28,6 +28,13 @@ Examples
 2. Initialize: `pre-commit install`
 3. Run on all files: `make precommit`
 
+## HTTP API (optional)
+- Install server deps: `pip install -r requirements-server.txt`
+- Run server: `make serve` (FastAPI on http://127.0.0.1:8000)
+- Examples:
+  - `GET /hello?name=Alice&lang=en` → `{ "message": "Hello, Alice!" }`
+  - `GET /hello?name=Ana&lang=pt&time=true` → time-based greeting in Portuguese
+
 ## Contributing
 - Use PRs for changes; require passing CI.
 - Suggested branch protection for `main`:

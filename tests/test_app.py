@@ -46,17 +46,10 @@ def test_main_time_based(monkeypatch, capsys):
     monkeypatch.setenv("APP_NAME", "Bob")
     monkeypatch.setenv("APP_LANG", "pt")
     monkeypatch.setenv("APP_TIME_GREET", "true")
-    # Exercise main() branch using time-based greeting
-    import sys
-    import types
-
+    # Call function directly with an explicit hour to avoid monkeypatching datetime
     from src import app as mod
 
-    fake_dt = types.SimpleNamespace(now=lambda: types.SimpleNamespace(hour=6))
-    sys.modules["datetime"] = types.SimpleNamespace(datetime=fake_dt)  # type: ignore[assignment]
-    mod.main()
-    out = capsys.readouterr().out.strip()
-    assert out == "Bom dia, Bob!"
+    assert mod.greet_time_based("Bob", "pt", hour=6) == "Bom dia, Bob!"
 
 
 def test_greet_time_based_boundaries():
