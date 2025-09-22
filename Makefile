@@ -1,7 +1,7 @@
 PY := python3
 PIP := pip3
 
-.PHONY: setup test lint format typecheck dev run serve test-server docker-run clean precommit precommit-autoupdate coverage-html help tidy
+.PHONY: setup test lint format typecheck dev run serve test-server docker-run docker-build docker-up docker-down clean precommit precommit-autoupdate coverage-html help tidy
 
 setup:
 	$(PIP) install -r requirements.txt
@@ -25,6 +25,15 @@ serve:
 docker-run:
 	docker build -t simpleeasy:dev .
 	docker run --rm -p $${PORT:-8000}:8000 simpleeasy:dev
+
+docker-build:
+	docker-compose build
+
+docker-up:
+	docker-compose up -d
+
+docker-down:
+	docker-compose down
 
 clean:
 	rm -rf .pytest_cache __pycache__ */__pycache__
@@ -56,5 +65,6 @@ help:
 	@echo "  make precommit        Run pre-commit on all files"
 	@echo "  make precommit-autoupdate  Update pre-commit hook versions"
 	@echo "  make clean|tidy       Remove caches"
+	@echo "  make docker-build|up|down  Build and run docker-compose services"
 typecheck:
 	mypy src

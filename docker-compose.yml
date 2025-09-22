@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: simpleeasy-api:dev
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_LOG_FORMAT=${APP_LOG_FORMAT:-json}
+      - APP_CORS_ORIGINS=${APP_CORS_ORIGINS:-http://localhost:8080}
+  ui:
+    build:
+      context: ./ui
+      dockerfile: Dockerfile.ui
+    image: simpleeasy-ui:dev
+    ports:
+      - "8080:8080"
+    depends_on:
+      - api
