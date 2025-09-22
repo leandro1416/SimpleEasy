@@ -18,3 +18,11 @@ Example: `APP_NAME=Alice make dev` → `Hello, Alice!`
 1. Install: `pip install pre-commit`
 2. Initialize: `pre-commit install`
 3. Run on all files: `make precommit`
+
+## Contributing
+- Use PRs for changes; require passing CI.
+- Suggested branch protection for `main`:
+  - Require PR reviews (1+)
+  - Require status checks (tests + lint) to pass
+  - Restrict pushes to maintainers only
+- Use Conventional Commits (`feat:`, `fix:`, `docs:`...).
