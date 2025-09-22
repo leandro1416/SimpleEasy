@@ -1,4 +1,6 @@
+import json
 import logging
+import time
 
 from fastapi import FastAPI, Query, Request
 
@@ -12,10 +14,17 @@ app = FastAPI(title="SimpleEasy API")
 
 @app.middleware("http")
 async def access_log(request: Request, call_next):
-    path = request.url.path
-    method = request.method
+    start = time.time()
     response = await call_next(request)
-    logger.info("%s %s -> %s", method, path, response.status_code)
+    duration_ms = int((time.time() - start) * 1000)
+    log = {
+        "level": "info",
+        "method": request.method,
+        "path": request.url.path,
+        "status": response.status_code,
+        "duration_ms": duration_ms,
+    }
+    logger.info(json.dumps(log, ensure_ascii=False))
     return response
 
 

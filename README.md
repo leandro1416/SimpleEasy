@@ -10,6 +10,10 @@ Minimal Python starter with tests.
 
 Example: `APP_NAME=Alice make dev` → `Hello, Alice!`
 
+### CLI
+- Install locally (editable): `pip install -e .`
+- Run: `simpleeasy` (respects `APP_NAME`, `APP_LANG`, `APP_TIME_GREET`)
+
 ## Requirements
 - Python 3.10 or newer
 - Pip and Make
