@@ -4,6 +4,7 @@ import os
 import time
 
 from fastapi import FastAPI, Query, Request
+from fastapi.middleware.cors import CORSMiddleware
 
 from src.app import greet_localized, greet_time_based
 
@@ -11,6 +12,15 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(mess
 logger = logging.getLogger("simpleeasy")
 
 app = FastAPI(title="SimpleEasy API")
+
+# CORS for local UI dev
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.middleware("http")
