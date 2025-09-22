@@ -1,7 +1,7 @@
 PY := python3
 PIP := pip3
 
-.PHONY: setup test lint typecheck dev run clean precommit precommit-autoupdate coverage-html help tidy
+.PHONY: setup test lint format typecheck dev run clean precommit precommit-autoupdate coverage-html help tidy
 
 setup:
 	$(PIP) install -r requirements.txt
@@ -11,6 +11,9 @@ test:
 
 lint:
 	ruff check src tests
+
+format:
+	ruff format src tests
 
 dev run:
 	$(PY) -m src.app
@@ -36,7 +39,8 @@ help:
 	@echo "Common targets:"
 	@echo "  make setup            Install dependencies"
 	@echo "  make test             Run tests with coverage (terminal)"
-	@echo "  make lint             Run pyflakes on src/"
+	@echo "  make lint             Run Ruff checks"
+	@echo "  make format           Format code with Ruff"
 	@echo "  make dev              Run the example app"
 	@echo "  make coverage-html    Generate HTML coverage report"
 	@echo "  make precommit        Run pre-commit on all files"
