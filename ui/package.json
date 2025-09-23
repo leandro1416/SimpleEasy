@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "lint": "eslint --max-warnings=0 .",
     "test": "vitest run",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "e2e:compose": "UI_BASE_URL=http://localhost:8080 playwright test --project=compose"
   },
   "dependencies": {
     "react": "^18.3.1",

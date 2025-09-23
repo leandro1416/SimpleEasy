@@ -19,5 +19,12 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
+    {
+      name: 'compose',
+      use: {
+        ...devices['Desktop Chrome'],
+        baseURL: process.env.UI_BASE_URL || 'http://localhost:8080',
+      },
+    },
   ],
 })
