@@ -1,0 +1,60 @@
+name: Compose E2E
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 2 * * 0'
+
+jobs:
+  e2e-compose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: ui/package-lock.json
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Install backend deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt -r requirements-server.txt
+      - name: Prepare UI env for proxy
+        working-directory: ui
+        run: |
+          echo "VITE_API_BASE=/api" > .env.local
+      - name: Build images
+        run: |
+          docker-compose build
+      - name: Bring up services
+        run: |
+          docker-compose up -d
+      - name: Wait for API via proxy
+        run: |
+          for i in {1..60}; do curl -sSf http://localhost:8080/api/health && exit 0 || sleep 2; done; exit 1
+      - name: Install Playwright deps
+        working-directory: ui
+        run: |
+          npm ci || npm install
+          npx playwright install --with-deps
+      - name: Run E2E against Compose
+        working-directory: ui
+        env:
+          UI_BASE_URL: http://localhost:8080
+        run: npm run e2e:compose
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: compose-e2e-report
+          path: ui/playwright-report
+          if-no-files-found: ignore
+      - name: Tear down
+        if: always()
+        run: |
+          docker-compose down
